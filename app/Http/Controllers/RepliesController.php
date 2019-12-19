@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use LaravelForum\Http\Requests\AddReplyRequest;
 use LaravelForum\Reply;
 use LaravelForum\Discussion;
+use LaravelForum\Notifications\NewReplyAdded;
 
 class RepliesController extends Controller
 {
@@ -41,6 +42,8 @@ class RepliesController extends Controller
             'discussion_id'=>$discussion->id,
             'content'=>$request->content
         ]);
+
+        $discussion->author->notify(new NewReplyAdded($discussion)); //send mail to owner of discussion
 
         session()->flash('success','Reply Added.');
         return redirect()->back();

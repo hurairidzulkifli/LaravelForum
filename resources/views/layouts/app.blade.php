@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        .btn-info{
+        .btn-info,.badge-info{
             color:#fff;
         }
     </style>
@@ -38,7 +38,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a href="{{route('users.notifications')}}" class="nav-link">
+                                    <span class="badge badge-info">
+                                   {{auth()->user()->unreadNotifications->count()}} Unread Notifications
+                                    </span>
+                                </a>
+                        </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
